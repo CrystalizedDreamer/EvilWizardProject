@@ -15,7 +15,11 @@ class Character:
     def display_stats(self):
         print(f"{self.name}'s Stats - Health: {self.health}/{self.max_health}, Attack Power: {self.attack_power}")
 
-    # Add your heal method here
+    def heal(self):
+        heal_amount = 30
+        total_Heal = self.health + heal_amount
+        if total_Heal > self.max_health:
+            self.health = self.max_health
 
 
 # Warrior class (inherits from Character)
@@ -23,7 +27,11 @@ class Warrior(Character):
     def __init__(self, name):
         super().__init__(name, health=140, attack_power=25)  # Boost health and attack power
 
-    # Add your power attack method here
+    def Power_Strike(self, opponent):
+        opponent.health -= self.attack_power * 2  # Double damage for power strike
+        print(f"{self.name} does a power strike on {opponent.name} for {self.attack_power * 2} damage!")
+        if opponent.health <= 0:
+            print(f"{opponent.name} has been defeated!")
 
 
 # Mage class (inherits from Character)
@@ -31,11 +39,23 @@ class Mage(Character):
     def __init__(self, name):
         super().__init__(name, health=100, attack_power=35)  # Boost attack power
 
-    # Add your cast spell method here
+    def Ice_Spear(self, opponent):
+        opponent.health -= 60  # Double damage for power strike
+        print(f"{self.name} casts an ICE SPEAR at {opponent.name} for {60} damage!")
+        if opponent.health <= 0:
+            print(f"{opponent.name} has been defeated!")
 
 class Cleric(Character):
     def __init__(self, name):
-        super().__init__(name, health=120, attack_power=20)  # Boost
+        super().__init__(name, health=125, attack_power=20)  # Boost
+        
+class Influencer(Character):
+    def __init__(self, name):
+        super().__init__(name, health=110, attack_power=1) 
+    
+    def Cancellation (self, opponent):
+        opponent.health -= opponent.health  # Cancels opponent's health
+        print(f"{self.name} cancelled {opponent.name} on social media, reducing their health to 0 and ending their career!")
         
         
 # EvilWizard class (inherits from Character)
@@ -53,8 +73,8 @@ def create_character():
     print("Choose your character class:")
     print("1. Warrior")
     print("2. Mage")
-    print("3. Archer")  # Add Archer
-    print("4. Paladin")  # Add Paladin
+    print("3. Cleric")  # Add Archer
+    print("4. Influencer")  # Add Paladin
     
     class_choice = input("Enter the number of your class choice: ")
     name = input("Enter your character's name: ")
@@ -64,11 +84,9 @@ def create_character():
     elif class_choice == '2':
         return Mage(name)
     elif class_choice == '3':
-        # Add Archer class here
-        pass
+        return Cleric(name) 
     elif class_choice == '4':
-        # Add Paladin class here
-        pass
+        return Influencer(name)
     else:
         print("Invalid choice. Defaulting to Warrior.")
         return Warrior(name)
