@@ -61,13 +61,17 @@ class Cleric(Character):
             print(f"{self.name} successfully exorcises {opponent.name}, banishing their soul!")
             print(f"{opponent.name} has been defeated!")
         else:
-            print(f"{self.name} attempts an exorcism on {opponent.name}, but he hasn't been baptized hard enough yet!")
+            print(f"{self.name} attempts an exorcism on {opponent.name}, but they haven't been weakened enough yet!")
         
 class Influencer(Character):
     def __init__(self, name):
-        super().__init__(name, health=110, attack_power=1) 
+        super().__init__(name, health=110, attack_power=1)
+        self.viral_challenge_used = False  # Track if the viral challenge has been used
     
     def Cancellation (self, opponent):
+        if not self.viral_challenge_used:
+            print(f"{self.name} can't cancel someone without a followng first, babe!")
+            return
         opponent.health -= opponent.health  # Cancels opponent's health
         print(f"{self.name} cancelled {opponent.name} on social media, ending their career!")
         if opponent.health <= 0:
@@ -75,17 +79,21 @@ class Influencer(Character):
     
     def ViralChallenge(self, opponent):
         import random
+        self.viral_challenge_used = True  # Mark the viral challenge as used
         result = random.randint(1, 10)
         if result > 5:
             opponent.health -= 20
             print(f"{opponent.name} injured themselves in {self.name}'s viral challenge!")
+            print(f"{self.name} and {opponent.name} have gone VIRAL!")
         elif result ==5:
             self.health -= 10
             opponent.health -= 10
             print(f"{self.name}'s viral challenge injured both parties!")
+            print(f"{self.name} and {opponent.name} have gone VIRAL!")
         else:
             self.health -= 20
-            print(f"{self.name}'s viral challenge failed to go viral!")
+            print(f"{self.name} injured themselves in their own challenge!")
+            print(f"{self.name} and {opponent.name} have gone VIRAL!")
 
         
 # EvilWizard class (inherits from Character)
