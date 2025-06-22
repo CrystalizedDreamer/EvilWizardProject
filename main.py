@@ -44,6 +44,9 @@ class Mage(Character):
         print(f"{self.name} casts an ICE SPEAR at {opponent.name} for {60} damage!")
         if opponent.health <= 0:
             print(f"{opponent.name} has been defeated!")
+    def Insight(self, opponent):
+        print(f"{self.name} has revealed {opponent.name}'s health: {opponent.health}/{opponent.max_health}")
+
 
 class Cleric(Character):
     def __init__(self, name):
