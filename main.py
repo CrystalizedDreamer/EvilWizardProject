@@ -48,6 +48,20 @@ class Mage(Character):
 class Cleric(Character):
     def __init__(self, name):
         super().__init__(name, health=125, attack_power=20)  # Boost
+    
+    def baptism(self, opponent):
+        opponent.health -= opponent.health / 2
+        print(f"{self.name} performs an involuntary baptism on {opponent.name}, reducing their health by half!")
+        if opponent.health <= 0:
+            print(f"{opponent.name} has been defeated!")
+    
+    def exorcism(self, opponent):
+        if opponent.health < opponent.max_health / 2:
+            opponent.health = 0
+            print(f"{self.name} successfully exorcises {opponent.name}, banishing their soul!")
+            print(f"{opponent.name} has been defeated!")
+        else:
+            print(f"{self.name} attempts an exorcism on {opponent.name}, but he hasn't been baptized hard enough yet!")
         
 class Influencer(Character):
     def __init__(self, name):
@@ -55,8 +69,24 @@ class Influencer(Character):
     
     def Cancellation (self, opponent):
         opponent.health -= opponent.health  # Cancels opponent's health
-        print(f"{self.name} cancelled {opponent.name} on social media, reducing their health to 0 and ending their career!")
-        
+        print(f"{self.name} cancelled {opponent.name} on social media, ending their career!")
+        if opponent.health <= 0:
+            print(f"{opponent.name} has been defeated!")
+    
+    def ViralChallenge(self, opponent):
+        import random
+        result = random.randint(1, 10)
+        if result > 5:
+            opponent.health -= 20
+            print(f"{opponent.name} injured themselves in {self.name}'s viral challenge!")
+        elif result ==5:
+            self.health -= 10
+            opponent.health -= 10
+            print(f"{self.name}'s viral challenge injured both parties!")
+        else:
+            self.health -= 20
+            print(f"{self.name}'s viral challenge failed to go viral!")
+
         
 # EvilWizard class (inherits from Character)
 class EvilWizard(Character):
@@ -73,8 +103,8 @@ def create_character():
     print("Choose your character class:")
     print("1. Warrior")
     print("2. Mage")
-    print("3. Cleric")  # Add Archer
-    print("4. Influencer")  # Add Paladin
+    print("3. Cleric")  
+    print("4. Influencer")  
     
     class_choice = input("Enter the number of your class choice: ")
     name = input("Enter your character's name: ")
