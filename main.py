@@ -26,12 +26,17 @@ class Character:
 class Warrior(Character):
     def __init__(self, name):
         super().__init__(name, health=140, attack_power=25)  # Boost health and attack power
+        self.shielded = False  # Track if shield block is active
 
     def Power_Strike(self, opponent):
         opponent.health -= self.attack_power * 2  # Double damage for power strike
         print(f"{self.name} does a power strike on {opponent.name} for {self.attack_power * 2} damage!")
         if opponent.health <= 0:
             print(f"{opponent.name} has been defeated!")
+
+    def Shield_Block(self):
+        self.shielded = True
+        print(f"{self.name} raises their shield, preparing to block the next attack!")
 
 
 # Mage class (inherits from Character)
@@ -147,10 +152,20 @@ def battle(player, wizard):
             player.attack(wizard)
         elif choice == '2':
             # Call the special ability here
-            pass  # Implement this
+            if isinstance(player, Warrior):
+                print("1. Power Strike\n2. Shield Block")
+                special = input("Choose a special ability: ")
+                if special == '1':
+                    player.Power_Strike(wizard)
+                elif special == '2':
+                    player.Shield_Block()
+                else:
+                    print("Invalid special ability choice.")
+            # ...existing code for other classes...
+            else:
+                pass  # Implement for other classes
         elif choice == '3':
-            # Call the heal method here
-            pass  # Implement this
+            player.heal()
         elif choice == '4':
             player.display_stats()
         else:
@@ -160,7 +175,12 @@ def battle(player, wizard):
         # Evil Wizard's turn to attack and regenerate
         if wizard.health > 0:
             wizard.regenerate()
-            wizard.attack(player)
+            # Check for Warrior's shield block
+            if isinstance(player, Warrior) and player.shielded:
+                print(f"{player.name} blocks the attack with their shield! No damage taken.")
+                player.shielded = False  # Reset shield
+            else:
+                wizard.attack(player)
 
         if player.health <= 0:
             print(f"{player.name} has been defeated!")
