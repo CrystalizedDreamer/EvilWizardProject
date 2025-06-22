@@ -202,3 +202,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    #Idea section:
+    #Refactor the code to place specials into the superclass and then override them in the subclasses
