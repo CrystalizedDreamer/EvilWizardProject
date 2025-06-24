@@ -11,6 +11,9 @@ class Character:
         print(f"{self.name} attacks {opponent.name} for {self.attack_power} damage!")
         if opponent.health <= 0:
             print(f"{opponent.name} has been defeated!")
+            
+    def special_ability(self, opponent):
+        print("No special ability for this character.")
 
     def display_stats(self):
         print(f"{self.name}'s Stats - Health: {self.health}/{self.max_health}, Attack Power: {self.attack_power}")
@@ -37,6 +40,16 @@ class Warrior(Character):
     def Shield_Block(self):
         self.shielded = True
         print(f"{self.name} raises their shield, preparing to block the next attack!")
+    
+    def special_ability(self, opponent):
+        print("1. Power Strike\n2. Shield Block")
+        choice = input("Choose a special ability: ")
+        if choice == '1':
+            self.Power_Strike(opponent)
+        elif choice == '2':
+            self.Shield_Block()
+        else:
+            print("Invalid special ability choice.")
 
 
 # Mage class (inherits from Character)
@@ -51,7 +64,15 @@ class Mage(Character):
             print(f"{opponent.name} has been defeated!")
     def Insight(self, opponent):
         print(f"{self.name} has revealed {opponent.name}'s health: {opponent.health}/{opponent.max_health}")
-
+    def special_ability(self, opponent):
+        print("1. Ice Spear\n2. Insight")
+        choice = input("Choose a special ability: ")
+        if choice == '1':
+            self.Ice_Spear(opponent)
+        elif choice == '2':
+            self.Insight(opponent)
+        else:
+            print("Invalid special ability choice.")
 
 class Cleric(Character):
     def __init__(self, name):
@@ -70,7 +91,17 @@ class Cleric(Character):
             print(f"{opponent.name} has been defeated!")
         else:
             print(f"{self.name} attempts an exorcism on {opponent.name}, but they haven't been weakened enough yet!")
-        
+    
+    def special_ability(self, opponent):
+        print("1. Baptism\n2. Exorcism")
+        choice = input("Choose a special ability: ")
+        if choice == '1':
+            self.baptism(opponent)
+        elif choice == '2':
+            self.exorcism(opponent)
+        else:
+            print("Invalid special ability choice.")
+            
 class Influencer(Character):
     def __init__(self, name):
         super().__init__(name, health=110, attack_power=1)
@@ -102,7 +133,15 @@ class Influencer(Character):
             self.health -= 20
             print(f"{self.name} injured themselves in their own challenge!")
             print(f"{self.name} and {opponent.name} have gone VIRAL!")
-
+    def special_ability(self, opponent):
+        print("1. Viral Challenge\n2. Cancellation")
+        choice = input("Choose a special ability: ")
+        if choice == '1':
+            self.ViralChallenge(opponent)
+        elif choice == '2':
+            self.Cancellation(opponent)
+        else:
+            print("Invalid special ability choice.")
         
 # EvilWizard class (inherits from Character)
 class EvilWizard(Character):
@@ -151,19 +190,7 @@ def battle(player, wizard):
         if choice == '1':
             player.attack(wizard)
         elif choice == '2':
-            # Call the special ability here
-            if isinstance(player, Warrior):
-                print("1. Power Strike\n2. Shield Block")
-                special = input("Choose a special ability: ")
-                if special == '1':
-                    player.Power_Strike(wizard)
-                elif special == '2':
-                    player.Shield_Block()
-                else:
-                    print("Invalid special ability choice.")
-            # ...existing code for other classes...
-            else:
-                pass  # Implement for other classes
+            player.special_ability(wizard)
         elif choice == '3':
             player.heal()
         elif choice == '4':
