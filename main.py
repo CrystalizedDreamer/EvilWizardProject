@@ -1,5 +1,6 @@
 # Base Character class
 import os
+import random
 class Character:
     def __init__(self, name, health, attack_power):
         self.name = name
@@ -8,8 +9,27 @@ class Character:
         self.max_health = health  # Store the original health for maximum limit
 
     def attack(self, opponent):
-        opponent.health -= self.attack_power
-        print(f"{self.name} attacks {opponent.name} for {self.attack_power} damage!")
+        rand = random.uniform(0, 2)
+        base_damage = self.attack_power
+
+        if rand < 0.3:
+            print(f"{self.name} attacks but MISSES!")
+            damage = 0
+        elif rand < 1:
+            print(f"{self.name} hits {opponent.name} for {base_damage} damage!")
+            damage = base_damage
+        elif rand < 1.5:
+            scaled_damage = int(base_damage * rand)
+            print(f"{self.name} lands a strong hit! {opponent.name} takes {scaled_damage} damage!")
+            damage = scaled_damage
+        else:
+            double_damage = base_damage * 2
+            print(f"CRITICAL! {self.name} deals DOUBLE DAMAGE: {double_damage} to {opponent.name}!")
+            damage = double_damage
+
+        opponent.health -= damage
+        if opponent.health < 0:
+            opponent.health = 0
 
             
     def special_ability(self, opponent):
