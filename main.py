@@ -23,7 +23,10 @@ class Character:
         total_Heal = self.health + heal_amount
         if total_Heal > self.max_health:
             self.health = self.max_health
-
+            print(f"{self.name} heals to maximum health: {self.max_health}!")
+        else:
+            self.health += heal_amount
+            print(f"{self.name} heals for {heal_amount} health! Current health: {self.health}/{self.max_health}")
 
 # Warrior class (inherits from Character)
 class Warrior(Character):
@@ -58,8 +61,7 @@ class Mage(Character):
     def Ice_Spear(self, opponent):
         opponent.health -= 60  # Double damage for power strike
         print(f"{self.name} casts an ICE SPEAR at {opponent.name} for {60} damage!")
-        if opponent.health <= 0:
-            print(f"{opponent.name} has been defeated!")
+
     def Insight(self, opponent):
         print(f"{self.name} has revealed {opponent.name}'s health: {opponent.health}/{opponent.max_health}")
     def special_ability(self, opponent):
@@ -170,8 +172,11 @@ def create_character():
         print("Invalid choice. Defaulting to Warrior.")
         return Warrior(name)
     
+    
 # Battle function with user menu for actions
 def battle(player, wizard):
+    if player.name.lower() == "zelda" and isinstance(player, Mage):
+        wizard.name = "Gannondorf"
     while wizard.health > 0 and player.health > 0:
         # Print player's turn menu
         print("\n--- Your Turn ---")
@@ -216,14 +221,20 @@ def battle(player, wizard):
 
 # Main function to handle the flow of the game
 def main():
-    # Character creation phase
-    player = create_character()
+    while True:
+        # Character creation phase
+        player = create_character()
 
-    # Evil Wizard is created
-    wizard = EvilWizard("The Dark Wizard")
+        # Evil Wizard is created
+        wizard = EvilWizard("The Dark Wizard")
 
-    # Start the battle
-    battle(player, wizard)
+        # Start the battle
+        battle(player, wizard)
+
+        play_again = input("Would you like to play again? (y/n): ").strip().lower()
+        if play_again != 'y':
+            print("Thanks for playing!")
+            break
 
 if __name__ == "__main__":
     main()
