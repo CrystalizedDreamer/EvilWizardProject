@@ -209,12 +209,12 @@ def battle(player, wizard):
             else:
                 wizard.attack(player)
 
-        if player.health <= 0:
-            print(f"{player.name} has been defeated!")
-            break
+            if player.health <= 0:
+                print(f"{player.name} has been defeated!")
+                break
 
     if wizard.health <= 0:
-        print(f"The wizard {wizard.name} has been defeated by {player.name}!")
+        print(f"{wizard.name} has been defeated by {player.name}!")
 
 # Main function to handle the flow of the game
 def main():
