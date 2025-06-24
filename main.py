@@ -1,4 +1,5 @@
 # Base Character class
+import os
 class Character:
     def __init__(self, name, health, attack_power):
         self.name = name
@@ -9,8 +10,7 @@ class Character:
     def attack(self, opponent):
         opponent.health -= self.attack_power
         print(f"{self.name} attacks {opponent.name} for {self.attack_power} damage!")
-        if opponent.health <= 0:
-            print(f"{opponent.name} has been defeated!")
+
             
     def special_ability(self, opponent):
         print("No special ability for this character.")
@@ -34,8 +34,6 @@ class Warrior(Character):
     def Power_Strike(self, opponent):
         opponent.health -= self.attack_power * 2  # Double damage for power strike
         print(f"{self.name} does a power strike on {opponent.name} for {self.attack_power * 2} damage!")
-        if opponent.health <= 0:
-            print(f"{opponent.name} has been defeated!")
 
     def Shield_Block(self):
         self.shielded = True
@@ -81,8 +79,6 @@ class Cleric(Character):
     def baptism(self, opponent):
         opponent.health -= opponent.health / 2
         print(f"{self.name} performs an involuntary baptism on {opponent.name}, reducing their health by half!")
-        if opponent.health <= 0:
-            print(f"{opponent.name} has been defeated!")
     
     def exorcism(self, opponent):
         if opponent.health < opponent.max_health / 2:
@@ -113,8 +109,6 @@ class Influencer(Character):
             return
         opponent.health -= opponent.health  # Cancels opponent's health
         print(f"{self.name} cancelled {opponent.name} on social media, ending their career!")
-        if opponent.health <= 0:
-            print(f"{opponent.name} has been defeated!")
     
     def ViralChallenge(self, opponent):
         import random
@@ -161,7 +155,7 @@ def create_character():
     print("3. Cleric")  
     print("4. Influencer")  
     
-    class_choice = input("Enter the number of your class choice: ")
+    class_choice = input("Enter the number of your class choice: ") #Console Clearing on Windows Devices, Linux to come later.
     name = input("Enter your character's name: ")
 
     if class_choice == '1':
@@ -175,17 +169,23 @@ def create_character():
     else:
         print("Invalid choice. Defaulting to Warrior.")
         return Warrior(name)
-
+    
 # Battle function with user menu for actions
 def battle(player, wizard):
     while wizard.health > 0 and player.health > 0:
+        # Print player's turn menu
         print("\n--- Your Turn ---")
         print("1. Attack")
         print("2. Use Special Ability")
         print("3. Heal")
         print("4. View Stats")
         
-        choice = input("Choose an action: ")
+        choice = input("Choose an action: ").strip()
+
+        if choice not in ['1', '2', '3', '4']:
+            print("Invalid choice, try again.")
+            input("Press Enter to continue...")
+            continue
 
         if choice == '1':
             player.attack(wizard)
@@ -195,9 +195,6 @@ def battle(player, wizard):
             player.heal()
         elif choice == '4':
             player.display_stats()
-        else:
-            print("Invalid choice, try again.")
-            continue
 
         # Evil Wizard's turn to attack and regenerate
         if wizard.health > 0:
@@ -212,7 +209,8 @@ def battle(player, wizard):
             if player.health <= 0:
                 print(f"{player.name} has been defeated!")
                 break
-
+        input("Press Enter to continue...")
+        os.system('cls')  # Clear console at the end of the turn for readability
     if wizard.health <= 0:
         print(f"{wizard.name} has been defeated by {player.name}!")
 
