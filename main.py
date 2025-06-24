@@ -127,13 +127,12 @@ class Influencer(Character):
     
     def Cancellation (self, opponent):
         if not self.viral_challenge_used:
-            print(f"{self.name} can't cancel someone without a followng first, babe!")
+            print(f"{self.name} can't cancel someone without a following first, babe!")
             return
-        opponent.health -= opponent.health  # Cancels opponent's health
+        opponent.health = 0  # Cancels opponent's health
         print(f"{self.name} cancelled {opponent.name} on social media, ending their career!")
     
     def ViralChallenge(self, opponent):
-        import random
         self.viral_challenge_used = True  # Mark the viral challenge as used
         result = random.randint(1, 10)
         if result > 5:
