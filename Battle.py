@@ -1,4 +1,5 @@
 # Battle function with user menu for actions
+## This file handles the battle mechanics between the player and the Evil Wizard.
 from Characters import Character, Warrior, Mage, Cleric, Influencer, EvilWizard,    create_character, clear_console
 import os
 import random

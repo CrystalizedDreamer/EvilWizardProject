@@ -1,5 +1,6 @@
 #Characters
-
+# This lovely piece of work controls the characters in the game.
+# It defines the base Character class and subclasses for specific character types.
 # Base Character class
 import os
 import random
@@ -185,7 +186,12 @@ def create_character():
     print("3. Cleric")  
     print("4. Influencer")  
     
-    class_choice = input("Enter the number of your class choice: ") #Console Clearing on Windows Devices, Linux to come later.
+    while True:
+        class_choice = input("Enter the number of your class choice: ").strip()
+        if class_choice in ['1', '2', '3', '4']:
+            break
+        print("Invalid choice. Please enter 1, 2, 3, or 4.")
+
     name = input("Enter your character's name: ")
 
     if class_choice == '1':
@@ -196,6 +202,3 @@ def create_character():
         return Cleric(name) 
     elif class_choice == '4':
         return Influencer(name)
-    else:
-        print("Invalid choice. Defaulting to Warrior.")
-        return Warrior(name)

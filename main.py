@@ -1,4 +1,5 @@
-import random
+# main.py
+# Welcome to the main entry file of the game...
 from Characters import Character, Warrior, Mage, Cleric, Influencer, EvilWizard, create_character, clear_console
 from Battle import battle
 # Main function to handle the flow of the game
@@ -21,5 +22,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    #Idea section:
-    #Refactor the code to place specials into the superclass and then override them in the subclasses
+    
