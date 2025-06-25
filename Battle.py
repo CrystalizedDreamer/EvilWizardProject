@@ -1,5 +1,5 @@
 # Battle function with user menu for actions
-from Characters import Character, Warrior, Mage, Cleric, Influencer, EvilWizard,    create_character
+from Characters import Character, Warrior, Mage, Cleric, Influencer, EvilWizard,    create_character, clear_console
 import os
 import random
 def battle(player, wizard):
@@ -43,6 +43,6 @@ def battle(player, wizard):
                 print(f"{player.name} has been defeated!")
                 break
         input("Press Enter to continue...")
-        os.system('cls')  # Clear console at the end of the turn for readability
+        clear_console()  # Cross-platform console clear
     if wizard.health <= 0:
         print(f"{wizard.name} has been defeated by {player.name}!")

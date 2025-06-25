@@ -17,17 +17,21 @@ class Character:
         if rand < 0.3:
             print(f"{self.name} attacks but MISSES!")
             damage = 0
-        elif rand < 1:
+            #MISS
+        elif rand >= 0.3 and rand < 1:
             print(f"{self.name} hits {opponent.name} for {base_damage} damage!")
             damage = base_damage
-        elif rand < 1.5:
+            #Normal hit
+        elif rand >= 1 and rand < 1.5:
             scaled_damage = int(base_damage * rand)
             print(f"{self.name} lands a strong hit! {opponent.name} takes {scaled_damage} damage!")
             damage = scaled_damage
+            #Scaled hit
         else:
             double_damage = base_damage * 2
             print(f"CRITICAL! {self.name} deals DOUBLE DAMAGE: {double_damage} to {opponent.name}!")
             damage = double_damage
+            # DEALING DULY DEVIOUS DOUBLE DAMAGE DAAARLIN'
 
         opponent.health -= damage
         if opponent.health < 0:
@@ -169,6 +173,10 @@ class EvilWizard(Character):
     def regenerate(self):
         self.health += 5  # Lower regeneration amount
         print(f"{self.name} regenerates 5 health! Current health: {self.health}")
+
+
+def clear_console():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def create_character():
     print("Choose your character class:")

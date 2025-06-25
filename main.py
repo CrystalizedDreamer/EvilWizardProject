@@ -1,8 +1,8 @@
-import os
 import random
-from Characters import Character, Warrior, Mage, Cleric, Influencer, EvilWizard,    create_character
+from Characters import Character, Warrior, Mage, Cleric, Influencer, EvilWizard, create_character, clear_console
 from Battle import battle
 # Main function to handle the flow of the game
+
 def main():
     while True:
         # Character creation phase
